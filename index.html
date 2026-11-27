@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tax Monitoring</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--plum:#5A305A;--plum2:#73507B;--ink:#3b2340;--muted:#8a6f86;--card:rgba(255,255,255,.82);--line:rgba(90,48,90,.12);--ok:#2f8f5b;--warn:#c98a00;--bad:#c0392b}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Poppins,Montserrat,system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,#FFF5C5 0%,#F58C77 100%) fixed;font-size:13px}
+.app{display:flex;gap:14px;padding:10px;min-height:100vh}
+.side{width:46px;flex:none;background:var(--plum);border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.logo{width:28px;height:28px;border-radius:8px;background:#FFD43B;color:var(--plum);display:grid;place-items:center;font-weight:700;margin-bottom:14px}
+.side button{width:30px;height:30px;border-radius:8px;border:0;background:rgba(255,255,255,.08);color:#f3dff0;cursor:pointer;font-size:13px}
+.side button.on{background:rgba(255,255,255,.25)}
+.main{flex:1;min-width:0}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .ic{width:32px;height:32px;border-radius:9px;background:var(--plum);color:#fff;display:grid;place-items:center;font-size:15px}
+.brand h1{margin:0;font-size:16px;font-weight:600}
+.brand p{margin:0;font-size:11px;color:var(--muted)}
+.nav{display:flex;gap:4px;background:rgba(255,255,255,.7);padding:4px;border-radius:12px}
+.nav button{border:0;background:transparent;font:inherit;font-size:11.5px;font-weight:600;color:var(--plum);padding:6px 12px;border-radius:9px;cursor:pointer}
+.nav button.on{background:var(--plum);color:#fff}
+.hello{margin-left:auto;text-align:right}
+.hello b{display:block;font-size:14px;color:var(--plum)}
+.hello span{font-size:11px;color:var(--plum2)}
+.bar{margin-top:12px;background:rgba(240,248,250,.85);border:1px solid var(--line);border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px}
+.bar .grow{flex:1}
+.btn{border:1px solid var(--line);background:#fff;color:var(--plum);font:inherit;font-weight:600;font-size:11.5px;padding:6px 12px;border-radius:10px;cursor:pointer}
+.btn.dark{background:var(--plum);color:#fff;border-color:var(--plum)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.chip{display:flex;align-items:center;gap:7px;border:0;background:#fff;font:inherit;font-weight:600;font-size:11.5px;color:var(--plum);padding:5px 12px 5px 5px;border-radius:999px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.chip i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#FFF3B0;display:grid;place-items:center;font-size:8.5px}
+.chip.on{background:var(--plum);color:#fff}.chip.on i{background:#FFD43B;color:var(--plum)}
+.filters{display:flex;justify-content:flex-end;gap:8px;margin-top:10px;flex-wrap:wrap}
+select,input[type=search]{font:inherit;font-size:11.5px;color:var(--plum);border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 10px}
+.card{background:var(--card);border-radius:16px;box-shadow:0 4px 18px rgba(90,48,90,.08);margin-top:12px}
+.hero{position:relative;height:320px;overflow:hidden}
+.pill{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:11px;white-space:nowrap}
+.bub{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 30px rgba(90,48,90,.18)}
+.bub small{font-size:10.5px;font-weight:600;color:var(--plum2)}
+.bub b{font-size:20px;color:var(--plum)}
+.bub em{font-style:normal;font-size:9.5px;color:var(--muted)}
+.b1{width:150px;height:150px;left:50%;top:60px;transform:translateX(-50%);background:radial-gradient(circle at 35% 30%,#f3e9ff,#c9a8ef)}
+.b2{width:120px;height:120px;left:14%;top:140px;background:radial-gradient(circle at 35% 30%,#fff1e6,#f7c3a3);opacity:.75}
+.b3{width:100px;height:100px;right:16%;top:150px;background:radial-gradient(circle at 35% 30%,#fffbe6,#f6e3a6);opacity:.65}
+.stats{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:14px 16px;display:flex;gap:10px;align-items:center;border-right:1px solid var(--line);cursor:pointer}
+.stat:last-child{border-right:0}
+.stat .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#efe2fb;flex:none}
+.stat small{display:block;font-size:10.5px;color:var(--plum2)}
+.stat b{font-size:15px}
+.empty{padding:60px 20px;text-align:center;color:var(--plum2)}
+.empty h2{margin:0 0 6px;color:var(--plum)}
+.tablewrap{overflow:auto;max-height:70vh}
+table{border-collapse:collapse;width:100%;font-size:11.5px}
+th{position:sticky;top:0;background:#f6eef5;color:var(--plum);text-align:left;padding:8px;font-weight:600;white-space:nowrap;z-index:1}
+td{padding:7px 8px;border-top:1px solid var(--line);white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700;background:#fbf5fa;position:sticky;bottom:0}
+.sel-ok{color:var(--ok)}.sel-min{background:#fff6d6;color:var(--warn);font-weight:600}.sel-bad{background:#fde3df;color:var(--bad);font-weight:700}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:600}
+.tag.ok{background:#dff3e7;color:var(--ok)}.tag.err{background:#fde3df;color:var(--bad)}.tag.warn{background:#fff3cc;color:var(--warn)}
+a.pdf{color:var(--plum);font-weight:600}
+.head2{display:flex;align-items:center;gap:10px;padding:12px 14px;flex-wrap:wrap}
+.head2 h3{margin:0;font-size:14px;color:var(--plum);margin-right:auto}
+.legend{font-size:10.5px;color:var(--muted);padding:0 14px 10px}
+.notice{padding:10px 14px;color:var(--bad);font-weight:600}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}.hello{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo">T</div>
+    <button data-page="dashboard" title="Dashboard">▦</button>
+    <button data-page="ppn" title="PPN">%</button>
+    <button data-page="pph" title="PPh">⌂</button>
+    <button data-page="report" title="REPORT">▤</button>
+    <button data-page="sktd" title="SKTD">▧</button>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div class="brand"><div class="ic">▣</div><div><h1>Tax Monitoring</h1><p>Pemantauan pembayaran &amp; faktur pajak</p></div></div>
+      <nav class="nav" id="nav">
+        <button data-page="dashboard">Dashboard</button><button data-page="ppn">% PPN</button><button data-page="pph">PPh</button><button data-page="report">REPORT</button><button data-page="sktd">SKTD</button>
+      </nav>
+      <div class="hello"><b id="greet">Selamat datang</b><span id="today"></span></div>
+    </div>
+    <div class="bar">
+      <span>ⓘ</span>
+      <span class="grow" id="syncInfo">Memuat data…</span>
+      <button class="btn dark" id="reload">↻ Muat ulang</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="filters">
+      <select id="masa"></select>
+      <select id="status"><option value="all">Semua transaksi</option><option value="ok">Hanya OK</option><option value="selisih">Ada selisih</option><option value="error">Hanya error</option></select>
+    </div>
+    <section id="view"></section>
+  </main>
+</div>
+<script>
+// Sumber data: workflow n8n "AP FP Dashboard API" (membaca sheet AP FP Test Report). URL webhook publik, tanpa kunci rahasia.
+const API_URL = 'https://n8.waruna-group.co.id/webhook/apfp-dashboard-api';
+const PTS = ['AMT','GMI','MJS','TTP','WNS','WSI'];
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const MON = {jan:0,feb:1,mar:2,apr:3,may:4,mei:4,jun:5,jul:6,aug:7,agu:7,agt:7,sep:8,oct:9,okt:9,nov:10,dec:11,des:11};
+const S = { page: 'dashboard', pt: 'ALL', masa: 'all', status: 'all', q: '', rows: [], meta: null, err: null };
+
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { if (v === '' || v == null) return null; if (typeof v === 'number') return v; const s = String(v).replace(/[^0-9,.\-]/g,'').replace(/\./g,'').replace(',', '.'); const n = parseFloat(s); return isNaN(n) ? null : n; };
+const rp = v => v == null ? '–' : new Intl.NumberFormat('id-ID').format(Math.round(v));
+const rpShort = v => { if (v == null) return '–'; const a = Math.abs(v); if (a >= 1e9) return 'Rp ' + (v/1e9).toLocaleString('id-ID',{maximumFractionDigits:2}) + ' M'; if (a >= 1e6) return 'Rp ' + (v/1e6).toLocaleString('id-ID',{maximumFractionDigits:2}) + ' jt'; return 'Rp ' + rp(v); };
+const digits = v => String(v ?? '').replace(/\D/g, '');
+
+function parseDate(v) {
+  if (v == null || v === '') return null;
+  if (typeof v === 'number' && v > 20000 && v < 80000) { const d = new Date(Date.UTC(1899,11,30) + v*864e5); return {y:d.getUTCFullYear(), m:d.getUTCMonth(), d:d.getUTCDate()}; }
+  const s = String(v).trim();
+  let m = s.match(/^(\d{1,2})[-\/ ]([A-Za-z]{3,})[-\/ ](\d{2,4})$/);
+  if (m) { const mo = MON[m[2].slice(0,3).toLowerCase()]; if (mo != null) { let y = +m[3]; if (y < 100) y += 2000; return {y, m:mo, d:+m[1]}; } }
+  m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (m) return {y:+m[1], m:+m[2]-1, d:+m[3]};
+  m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/); if (m) { let y = +m[3]; if (y < 100) y += 2000; return {y, m:+m[2]-1, d:+m[1]}; }
+  return null;
+}
+const masaKey = d => d ? `${d.y}-${String(d.m+1).padStart(2,'0')}` : 'none';
+const masaLabel = k => { if (k === 'none') return 'Tanpa tanggal'; const [y,m] = k.split('-'); return `${BULAN[+m-1]} ${y}`; };
+
+function normalize(data) {
+  const pec = (data.pecahan || []).filter(p => String(p.Status||'').toUpperCase() === 'OK' && p['Drive Link']);
+  const byFull = new Map(); const bySerialFile = new Map();
+  for (const p of pec) {
+    const full = digits(p['Nomor FP']).padStart(17,'0');
+    if (!byFull.has(full)) byFull.set(full, p);
+    const k = full.slice(-13) + '|' + (p['Source File ID']||'');
+    if (!bySerialFile.has(k)) bySerialFile.set(k, p);
+  }
+  const rows = [];
+  for (const pt of Object.keys(data.companies || {})) {
+    for (const r of data.companies[pt]) {
+      const kode = digits(r['Kode Pajak']); const kode4 = kode ? kode.padStart(4,'0') : '';
+      const serial = digits(r['No. FP.']); const serial13 = serial ? serial.padStart(13,'0') : '';
+      const full = kode4 && serial13 ? kode4 + serial13 : '';
+      const p = (full && byFull.get(full)) || (serial13 && bySerialFile.get(serial13 + '|' + (r['File ID']||''))) || null;
+      const d = parseDate(r['Tanggal']);
+      const pesan = String(r['Pesan Error'] || '').trim();
+      rows.push({
+        pt, tanggal: r['Tanggal'] ?? '', d, masa: masaKey(d), kode: kode4, fp: serial13, full,
+        supplier: r['Supplier'] ?? '', harga: num(r['HARGA JUAL']), dpp: num(r['DPP']), ppn: num(r['PPN']),
+        dpp1112: num(r['DPP(11/12)']), selDpp: num(r['SELISIH DPP']), ppn11: num(r['PPN(11%)']), selPpn: num(r['SELISIH PPN']),
+        pembeli: r['Nama Pembeli'] ?? '', pesan, error: !serial13 || !!pesan,
+        pdf: p ? p['Drive Link'] : '', pdfName: p ? p['Split File Name'] : '', processed: r['Processed Time (Asia/Bangkok)'] || ''
+      });
+    }
+  }
+  for (const r of (data.error_log || [])) {
+    const pt = String(r['Company'] || r['PT'] || r['target_sheet'] || r['Perusahaan'] || '').toUpperCase();
+    const d = parseDate(r['Tanggal']);
+    rows.push({ pt: PTS.includes(pt) ? pt : (pt || '–'), tanggal: r['Tanggal'] ?? '', d, masa: masaKey(d), kode: digits(r['Kode Pajak']).padStart(4,'0').replace(/^0000$/,''), fp: digits(r['No. FP.']), full: '',
+      supplier: r['Supplier'] ?? '', harga: num(r['HARGA JUAL']), dpp: num(r['DPP']), ppn: num(r['PPN']), dpp1112: num(r['DPP(11/12)']), selDpp: num(r['SELISIH DPP']), ppn11: num(r['PPN(11%)']), selPpn: num(r['SELISIH PPN']),
+      pembeli: r['Nama Pembeli'] ?? '', pesan: String(r['Pesan Error'] || r['Error'] || r['Pesan'] || 'Error (ERROR_LOG)'), error: true, fromLog: true, pdf: '', processed: r['Processed Time (Asia/Bangkok)'] || '' });
+  }
+  rows.sort((a,b) => (b.d ? b.d.y*10000+b.d.m*100+b.d.d : 0) - (a.d ? a.d.y*10000+a.d.m*100+a.d.d : 0));
+  return rows;
+}
+const selClass = v => v == null ? '' : Math.abs(v) < 0.5 ? 'sel-ok' : Math.abs(v) <= 1 ? 'sel-min' : 'sel-bad';
+const hasSel = r => (r.selDpp != null && Math.abs(r.selDpp) > 1) || (r.selPpn != null && Math.abs(r.selPpn) > 1);
+
+function filtered(useStatus = true) {
+  const q = S.q.trim().toLowerCase();
+  return S.rows.filter(r => (S.pt === 'ALL' || r.pt === S.pt) && (S.masa === 'all' || r.masa === S.masa)
+    && (!useStatus || S.status === 'all' || (S.status === 'ok' && !r.error) || (S.status === 'error' && r.error) || (S.status === 'selisih' && hasSel(r)))
+    && (!q || [r.supplier, r.pembeli, r.full, r.fp, r.kode, r.pesan, r.pt].join(' ').toLowerCase().includes(q)));
+}
+const sum = (rows, k) => rows.reduce((a, r) => a + (r[k] || 0), 0);
+
+async function load() {
+  $('#syncInfo').textContent = 'Memuat data dari AP FP Test Report…';
+  try {
+    const res = await fetch(API_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    S.meta = data; S.err = null; S.rows = normalize(data);
+  } catch (e) { S.err = e.message || String(e); }
+  buildMasa(); render();
+}
+function buildMasa() {
+  const keys = [...new Set(S.rows.map(r => r.masa))].sort().reverse();
+  if (S.masa !== 'all' && !keys.includes(S.masa)) S.masa = 'all';
+  $('#masa').innerHTML = `<option value="all">Semua masa pajak</option>` + keys.map(k => `<option value="${k}" ${k===S.masa?'selected':''}>Masa pajak ${masaLabel(k)}</option>`).join('');
+}
+function renderChrome() {
+  document.querySelectorAll('[data-page]').forEach(b => b.classList.toggle('on', b.dataset.page === S.page));
+  $('#chips').innerHTML = [['ALL','Semua PT']].concat(PTS.map(p => [p,'PT. '+p])).map(([k,l]) => `<button class="chip ${S.pt===k?'on':''}" data-pt="${k}"><i>${k}</i>${l}</button>`).join('');
+  if (S.err) $('#syncInfo').innerHTML = `<b style="color:var(--bad)">Gagal memuat data</b> (${esc(S.err)}). Pastikan workflow n8n "AP FP Dashboard API" aktif, lalu klik Muat ulang.`;
+  else if (S.meta) { const nErr = S.rows.filter(r => r.error).length;
+    $('#syncInfo').innerHTML = `Data dari <b>AP FP Test Report</b> · n8n, sinkron terakhir <b>${esc(S.meta.generated_at)} WIB</b> · ${S.rows.length} record · ${(S.meta.pecahan||[]).length} PDF pecahan` + (nErr ? ` · <b style="color:var(--bad)">${nErr} error</b>` : '') + ((S.meta.errors||[]).length ? ` · <span style="color:var(--bad)">tab gagal dibaca: ${esc(S.meta.errors.join('; '))}</span>` : ''); }
+  const h = +new Date().toLocaleString('en-US',{timeZone:'Asia/Bangkok',hour:'numeric',hour12:false});
+  $('#greet').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
+  $('#today').textContent = new Date().toLocaleDateString('id-ID',{timeZone:'Asia/Bangkok',weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.querySelector('.filters').style.display = ['dashboard','ppn'].includes(S.page) ? '' : 'none';
+}
+function placeholder(title) {
+  return `<div class="card empty"><h2>${title}</h2><p><b>Data menyusul.</b> Menu ini belum tersambung ke sumber data. Saat ini baru data Faktur Pajak (PPN Masukan) yang tersedia.</p></div>`;
+}
+function renderDashboard() {
+  const rows = filtered(false).filter(r => !r.error);
+  const masaTxt = S.masa === 'all' ? 'Semua masa' : 'Masa ' + masaLabel(S.masa);
+  const ppn = sum(rows, 'ppn'), dpp = sum(rows, 'dpp');
+  const nSel = rows.filter(hasSel).length, nErr = filtered(false).filter(r => r.error).length;
+  return `<div class="card hero">
+    <div class="pill">▣ Ringkasan pajak · <b>${masaTxt}</b>${S.pt==='ALL'?'':' · PT. '+S.pt}</div>
+    <div class="bub b2"><small>↗ PPN Keluaran</small><b style="font-size:13px">Data menyusul</b></div>
+    <div class="bub b1"><small>↙ PPN Masukan</small><b>${rows.length ? rpShort(ppn) : 'Rp 0'}</b><em>Rp ${rp(ppn)} · ${rows.length} faktur</em></div>
+    <div class="bub b3"><small>⌂ PPh</small><b style="font-size:12px">Data menyusul</b></div>
+  </div>
+  <div class="card stats">
+    <div class="stat" data-go="ppn"><div class="ic">↙</div><div><small>Total PPN Masukan · ${masaTxt}</small><b>Rp ${rp(ppn)}</b></div></div>
+    <div class="stat" data-go="ppn"><div class="ic">▤</div><div><small>Total DPP · ${rows.length} faktur</small><b>Rp ${rp(dpp)}</b></div></div>
+    <div class="stat" data-go="ppn" data-st="selisih"><div class="ic" style="background:#fde3df">!</div><div><small>Faktur dengan selisih (&gt; Rp 1)</small><b>${nSel}</b></div></div>
+    <div class="stat" data-go="ppn" data-st="error"><div class="ic" style="background:#fff3cc">✕</div><div><small>Error / gagal proses</small><b>${nErr}</b></div></div>
+  </div>
+  <div class="card stats" style="grid-template-columns:1fr 1fr">
+    <div class="stat"><div class="ic" style="background:#ffe6d8">↗</div><div><small>Total PPN Keluaran</small><b style="font-size:12px;color:var(--muted)">Data menyusul</b></div></div>
+    <div class="stat"><div class="ic" style="background:#fff3cc">⌂</div><div><small>Total PPh</small><b style="font-size:12px;color:var(--muted)">Data menyusul</b></div></div>
+  </div>`;
+}
+function renderPPN() {
+  const rows = filtered(true);
+  const ok = rows.filter(r => !r.error);
+  const body = rows.map(r => `<tr>
+    <td>${esc(r.tanggal)}</td><td>${esc(r.kode)}</td><td title="${esc(r.full)}">${esc(r.full || r.fp)}</td><td>${esc(r.supplier)}</td>
+    <td class="n">${rp(r.harga)}</td><td class="n">${rp(r.dpp)}</td><td class="n">${rp(r.ppn)}</td><td class="n">${rp(r.dpp1112)}</td>
+    <td class="n ${selClass(r.selDpp)}">${rp(r.selDpp)}</td><td class="n ${selClass(r.selPpn)}">${rp(r.selPpn)}</td>
+    <td>${esc(r.pembeli)}</td><td>${esc(r.pt)}</td>
+    <td>${r.error ? `<span class="tag err" title="${esc(r.pesan)}">ERROR</span> ${esc(r.pesan).slice(0,80)}` : hasSel(r) ? '<span class="tag warn">SELISIH</span>' : '<span class="tag ok">OK</span>'}</td>
+    <td>${r.pdf ? `<a class="pdf" href="${esc(r.pdf)}" target="_blank" rel="noopener" title="${esc(r.pdfName)}">Buka PDF</a>` : '<span style="color:var(--muted)">–</span>'}</td></tr>`).join('');
+  return `<div class="card">
+    <div class="head2"><h3>PPN Masukan · Faktur Pajak (${rows.length})</h3>
+      <input type="search" id="q" placeholder="Cari supplier, No FP, pembeli…" value="${esc(S.q)}" style="min-width:240px">
+      <button class="btn" id="csv">Unduh CSV</button></div>
+    <div class="legend">Selisih: <span class="sel-ok">0 = cocok</span> · <span class="sel-min">±1 = pembulatan</span> · <span class="sel-bad">&gt; 1 = perlu dicek</span>. No FP ditampilkan lengkap 17 digit (kode + nomor seri). Total hanya menghitung baris tanpa error.</div>
+    ${S.err ? `<div class="notice">Data belum bisa dimuat: ${esc(S.err)}</div>` : ''}
+    <div class="tablewrap"><table>
+      <thead><tr><th>Tanggal</th><th>Kode</th><th>No FP</th><th>Supplier</th><th class="n">Harga Jual</th><th class="n">DPP</th><th class="n">PPN</th><th class="n">DPP (11/12)</th><th class="n">Selisih DPP</th><th class="n">Selisih PPN</th><th>Nama Pembeli</th><th>PT</th><th>Status / Pesan Error</th><th>PDF Pecahan</th></tr></thead>
+      <tbody>${body || `<tr><td colspan="14" class="empty">${S.err ? 'Data gagal dimuat.' : 'Belum ada faktur untuk filter ini.'}</td></tr>`}</tbody>
+      <tfoot><tr><td colspan="4">Total (${ok.length} faktur)</td><td class="n">${rp(sum(ok,'harga'))}</td><td class="n">${rp(sum(ok,'dpp'))}</td><td class="n">${rp(sum(ok,'ppn'))}</td><td class="n">${rp(sum(ok,'dpp1112'))}</td><td class="n">${rp(sum(ok,'selDpp'))}</td><td class="n">${rp(sum(ok,'selPpn'))}</td><td colspan="4"></td></tr></tfoot>
+    </table></div></div>`;
+}
+function render() {
+  renderChrome();
+  const v = $('#view');
+  v.innerHTML = S.page === 'dashboard' ? renderDashboard() : S.page === 'ppn' ? renderPPN()
+    : placeholder({pph:'PPh', report:'REPORT', sktd:'SKTD'}[S.page]);
+  const q = $('#q'); if (q) { q.oninput = e => { S.q = e.target.value; const pos = e.target.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(pos,pos); }; }
+  const c = $('#csv'); if (c) c.onclick = downloadCsv;
+  v.querySelectorAll('[data-go]').forEach(el => el.onclick = () => { S.page = el.dataset.go; if (el.dataset.st) { S.status = el.dataset.st; $('#status').value = S.status; } render(); });
+}
+function downloadCsv() {
+  const head = ['Tanggal','Kode','No FP','Supplier','Harga Jual','DPP','PPN','DPP(11/12)','Selisih DPP','Selisih PPN','Nama Pembeli','PT','Status','Pesan Error','PDF'];
+  const lines = [head].concat(filtered(true).map(r => [r.tanggal, r.kode, r.full || r.fp, r.supplier, r.harga, r.dpp, r.ppn, r.dpp1112, r.selDpp, r.selPpn, r.pembeli, r.pt, r.error ? 'ERROR' : 'OK', r.pesan, r.pdf]));
+  const csv = lines.map(l => l.map(x => `"${String(x ?? '').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], {type:'text/csv'})); a.download = 'faktur-pajak-ppn.csv'; a.click();
+}
+document.addEventListener('click', e => {
+  const p = e.target.closest('[data-page]'); if (p) { S.page = p.dataset.page; render(); }
+  const c = e.target.closest('[data-pt]'); if (c) { S.pt = c.dataset.pt; render(); }
+});
+$('#masa').onchange = e => { S.masa = e.target.value; render(); };
+$('#status').onchange = e => { S.status = e.target.value; render(); };
+$('#reload').onclick = load;
+render(); load();
+</script>
+</body>
+</html>
