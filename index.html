@@ -125,6 +125,56 @@ tr.hd td{background:#f6eef5;font-weight:600;color:var(--plum)}tr.tot td{font-wei
 .mbox select,.mbox input,.mbox textarea{width:100%}.mbox .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 #toast{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:6px;z-index:60}
 .t{background:var(--plum);color:#fff;padding:8px 14px;border-radius:12px;font-size:11.5px;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:360px}.t.err{background:var(--bad)}.t.ok{background:var(--ok)}
+.ppnbox{margin:12px 14px 14px;padding:14px;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:18px}
+.vtabs{display:inline-flex;gap:2px;background:#f3e6f1;padding:3px;border-radius:12px}
+.vtabs button{border:0;background:transparent;color:var(--plum);font-weight:700;font-size:11px;padding:6px 14px;border-radius:9px;cursor:pointer;letter-spacing:.02em}
+.vtabs button.on{background:var(--plum);color:#fff}
+.frow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.frow .chips{flex:none}
+.qin{flex:1;min-width:200px;border-radius:12px;padding:8px 12px}
+.statrow{margin-top:12px}.tstat{display:inline-block;min-width:200px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px}
+.tstat small{display:block;font-size:9.5px;color:var(--plum2);letter-spacing:.06em}.tstat b{display:block;font-size:22px;color:var(--plum);line-height:1.2}
+.statusrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:12px}.stl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-right:4px}
+.stc{border:1px solid var(--line);background:#fff;color:var(--plum);border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:600;cursor:pointer}
+.stc span{margin-left:6px;background:#f1e4f1;border-radius:999px;padding:0 7px;font-size:10.5px}
+.stc.on{background:var(--plum);color:#fff;border-color:var(--plum)}.stc.on span{background:rgba(255,255,255,.25)}
+.stc.ed{color:#7c3aed}.stc.ed.on{color:#fff}.stc.warnt{border-color:#f0d98a;background:#fff8dd;color:#7a5a00}
+.sugall{margin-left:auto;border:1px solid #e3c9e0;background:#fbeefa;color:var(--plum);border-radius:999px;padding:6px 14px;font-size:11.5px;font-weight:600;cursor:pointer}
+.dupbanner{margin-top:12px;display:flex;align-items:center;gap:12px;padding:10px 14px;background:#fff6d6;border:1px solid #f0d98a;border-radius:16px;color:#7a4b00;flex-wrap:wrap}
+.dupbanner .dtx{flex:1;min-width:240px;font-size:11.5px}.dupbanner .dtx span{font-size:10.5px}
+.dic{width:30px;height:30px;border-radius:50%;background:#f5b400;color:#fff;display:grid;place-items:center;flex:none;font-weight:700}
+.selrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:8px 14px;background:#faf1f9;border-radius:12px;font-size:11.5px}
+.selrow label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.printall{border:0;background:var(--plum);color:#fff;font-weight:600;font-size:11.5px;padding:7px 16px;border-radius:999px;cursor:pointer}.printall[disabled]{background:#cdbacb;cursor:not-allowed}
+.cards{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.fcard{display:grid;grid-template-columns:28px minmax(0,1fr) 150px minmax(330px,auto);gap:10px 14px;align-items:center;background:#fff;border:1px solid var(--line);border-left:4px solid #e3d0e1;border-radius:16px;padding:12px 14px;box-shadow:0 1px 3px rgba(90,48,90,.06)}
+.fcard.cm{border-left-color:#14b8a6}.fcard.cd{border-left-color:#fb923c}.fcard.appr{border-left-color:#10b981}.fcard.dupb{border:1px solid #f5b400;border-left:4px solid #f5b400;background:#fffdf5}.fcard.excl{opacity:.6;background:#f6f3f6}.fcard.selc{box-shadow:0 0 0 2px #b184b8}
+.fcard .ck{display:flex;justify-content:center}.fcard .ck input{width:16px;height:16px;accent-color:var(--plum)}
+.l1{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.nsfp{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink)}.nsfp b{background:#fff2b8;border-radius:4px;padding:0 2px}.nsfp.strike{text-decoration:line-through;color:var(--muted)}
+.ptb{background:#FFE98A;color:var(--plum);font-weight:700;font-size:10px;padding:1px 8px;border-radius:6px}
+.sup{margin-top:3px;font-weight:600;text-transform:uppercase;font-size:12.5px;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.l3{margin-top:4px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sug{border:1px solid #e3c9e0;background:#fbeefa;color:var(--plum2);font-size:10.5px;font-weight:600;border-radius:999px;padding:2px 9px;cursor:pointer}
+.exp{color:var(--bad);font-weight:600;font-size:10.5px}
+.editedp{margin-top:5px;display:inline-block;background:#f3e8ff;color:#7c3aed;border-radius:999px;padding:2px 10px;font-size:10.5px;font-weight:500}
+.famt{text-align:right}.famt .small span{color:var(--plum);font-variant-numeric:tabular-nums}.famt .big{font-size:16px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}.famt .lbl{font-size:9.5px;letter-spacing:.08em;color:var(--muted)}
+.facts{display:flex;flex-direction:column;gap:6px;align-items:flex-end}.arow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.cbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:11px;font-weight:600;cursor:pointer}
+.cbtn.m{color:#0f766e;border-color:#99e0d6}.cbtn.m.on{background:#0d9488;color:#fff;border-color:#0d9488}
+.cbtn.d{color:#c2410c;border-color:#fdba74}.cbtn.d.on{background:#f97316;color:#fff;border-color:#f97316}
+.cbtn[disabled],.msel[disabled]{opacity:.45;cursor:not-allowed}
+.msel{border-radius:999px;font-size:11px;padding:7px 10px;max-width:150px}
+.pbtn{border:0;background:#a8909f;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer}.pbtn:not([disabled]){background:var(--plum)}.pbtn[disabled]{cursor:not-allowed;opacity:.75}
+.ebtn{border:1px solid #c4a4f0;background:#fff;color:#7c3aed;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer}.ebtn[disabled]{opacity:.5;cursor:not-allowed}
+.spill{border-radius:999px;padding:6px 12px;font-size:10.5px;font-weight:700;letter-spacing:.02em}
+.spill.warn{background:#fff2c6;color:#a66a00;border:1px solid #f0d98a}.spill.ok{background:#dff3e7;color:var(--ok)}.spill.info{background:#e6f4ff;color:#1d6fb8}.spill.gray{background:#eee;color:#666}.spill.err{background:#fde3df;color:var(--bad)}.spill.vio{background:#f3e8ff;color:#7c3aed}
+.hint{font-size:10px;color:var(--muted)}
+.eye{border:0;background:transparent;cursor:pointer;font-size:14px;color:var(--plum2)}
+.fcard>.pend,.fcard>.dupcard{grid-column:1/-1;margin:0}
+.pend{padding:6px 10px;background:#efe2fb;border-radius:10px;font-size:11px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;white-space:normal}.pend .btns{margin-left:auto;display:flex;gap:6px}
+.dupcard{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#fff2c6;border:1px solid #f0d98a;border-radius:12px;color:#7a4b00;flex-wrap:wrap}
+.dupcard .dtx{flex:1;min-width:240px;font-size:10.5px}.dupcard .dtx b{font-size:11px}.dupcard .dic{width:24px;height:24px;font-size:12px}.dact{font-size:10.5px;color:#7a4b00}
+.dbtn{border:0;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer}.dbtn.red{background:#e11d48}.dbtn.vio{background:#7c3aed}.dbtn[disabled]{opacity:.5}
+@media(max-width:1100px){.fcard{grid-template-columns:28px minmax(0,1fr) 130px}.facts{grid-column:1/-1;align-items:flex-start}.arow{justify-content:flex-start}}
 @media(max-width:800px){.stats{grid-template-columns:1fr}.hello{display:none}.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
 </style>
 </head>
@@ -184,7 +234,7 @@ const MON = {jan:0,feb:1,mar:2,apr:3,may:4,mei:4,jun:5,jul:6,aug:7,agu:7,agt:7,s
 const CATS = { MASUKAN: 'PPN MASUKAN', DITUNDA: 'PPN DITUNDA' };
 const LS = { data: 'fpmon.dataset.v1', states: 'fpmon.states.v1' };
 const S = { page:'dashboard', sub:'MASUKAN', tab:'ALL', pending:false, pt:'ALL', masa:'all', q:'', rows:[], meta:null, err:null, loading:false,
-  states:{}, stateMeta:null, stateErr:null, stateReady:false, sel:new Set(), pph:'pph23', rep:'NERACA',
+  states:{}, stateMeta:null, stateErr:null, stateReady:false, sel:new Set(), view:'list', dupOnly:false, limit:60, pph:'pph23', rep:'NERACA',
   user: 'Tim Tax', role: 'head' };  // tanpa login: semua pengguna dicatat sebagai "Tim Tax"
 
 const $ = s => document.querySelector(s);
@@ -390,19 +440,31 @@ function runPdfs(rows, mode) {
     a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
   }, i * 600));
 }
-async function printSelected(mode) {
-  const chosen = S.rows.filter(r => S.sel.has(r.key));
+async function printRows(chosen, mode) {
   const elig = chosen.filter(r => canAct(r) && catKey(r) && st(r).masa && !isExcl(r) && r.pdf);
   const noClass = chosen.filter(r => !(catKey(r) && st(r) && st(r).masa)).length, noPdf = chosen.filter(r => catKey(r) && st(r) && st(r).masa && !r.pdf && !isExcl(r)).length, excl = chosen.filter(isExcl).length;
   if (!elig.length) { toast('Tidak ada faktur yang bisa di-print: pilih kategori + masa dulu, dan pastikan ada PDF pecahan.', 'err'); return; }
   const skipped = [noClass && `${noClass} belum diklasifikasi`, noPdf && `${noPdf} tanpa PDF`, excl && `${excl} dikecualikan`].filter(Boolean).join(', ');
-  if (!confirm(`${elig.length} faktur akan ${mode === 'print' ? 'dibuka untuk dicetak' : 'diunduh'} dan otomatis ditandai Printed + Approved (dilaporkan). Approved tidak bisa dibatalkan.${skipped ? '\nDilewati: ' + skipped : ''}\nLanjut?`)) return;
-  runPdfs(elig, mode);
   const todo = elig.filter(r => !st(r).printed);
+  if (todo.length && !confirm(`${todo.length} faktur akan ${mode === 'print' ? 'dibuka untuk dicetak' : 'diunduh'} dan otomatis ditandai Printed + Approved (dilaporkan). Approved tidak bisa dibatalkan.${skipped ? '\nDilewati: ' + skipped : ''}\nLanjut?`)) return;
+  runPdfs(elig, mode);
   if (todo.length) {
     const ok = await postEvents(todo.map(r => ({ action: 'print', faktur_key: r.key, note: mode === 'print' ? 'print' : 'unduh' })), `${todo.length} faktur ditandai Printed + Approved`);
     if (ok) { todo.forEach(r => S.sel.delete(r.key)); render(); }
   } else toast('PDF dibuka. Faktur sudah Printed sebelumnya.', 'ok');
+}
+const printSelected = mode => printRows(S.rows.filter(r => S.sel.has(r.key)), mode);
+function applySuggestion(rows) {
+  const ev = rows.map(r => { const g = suggest(r); return { action: 'classify', faktur_key: r.key, category: g.category, masa: g.masa }; });
+  if (!ev.length) return;
+  if (ev.length > 1 && !confirm(`Terapkan saran sistem ke ${ev.length} faktur? (kategori + masa = bulan tanggal FP, cut-off tanggal 25). Masih bisa diubah sebelum Print & Approve.`)) return;
+  postEvents(ev, `Saran diterapkan ke ${ev.length} faktur`);
+}
+function openPreview(r) {
+  const id = driveId(r.pdf); if (!id) return;
+  $('#editBox').innerHTML = `<h3>${esc(nsfpTxt(r))}</h3><p class="small">${esc(r.supplier)} · ${esc(r.pt)}</p><iframe src="https://drive.google.com/file/d/${id}/preview" style="width:100%;height:65vh;border:1px solid var(--line);border-radius:10px"></iframe>
+    <div class="row"><a class="btn" href="${esc(r.pdf)}" target="_blank" rel="noopener">Buka di Drive ↗</a><button class="btn dark" id="eCancel">Tutup</button></div>`;
+  $('#editModal').classList.add('on'); $('#eCancel').onclick = () => $('#editModal').classList.remove('on');
 }
 function bulkApply() {
   const cat = $('#bCat') ? $('#bCat').value : '', masa = $('#bMasa') ? $('#bMasa').value : '';
@@ -462,7 +524,7 @@ function buildMasa() {
 }
 function renderChrome() {
   document.querySelectorAll('[data-page]').forEach(b => b.classList.toggle('on', b.dataset.page === S.page));
-  $('#chips').innerHTML = ['dashboard','ppn','pph'].includes(S.page) ? [['ALL','Semua PT']].concat(PTS.map(p => [p,'PT. '+p])).map(([k,l]) => `<button class="chip ${S.pt===k?'on':''}" data-pt="${k}"><i>${k}</i>${l}</button>`).join('') : '';
+  $('#chips').innerHTML = ['dashboard','pph'].includes(S.page) ? [['ALL','Semua PT']].concat(PTS.map(p => [p,'PT. '+p])).map(([k,l]) => `<button class="chip ${S.pt===k?'on':''}" data-pt="${k}"><i>${k}</i>${l}</button>`).join('') : '';
   const nErr = S.rows.filter(r => r.error).length;
   if (!S.meta && S.err) $('#syncInfo').innerHTML = `<b style="color:var(--bad)">Gagal memuat data</b> (${esc(S.err)}). Coba klik Muat ulang.`;
   else if (S.meta) {
@@ -478,7 +540,7 @@ function renderChrome() {
   const h = +new Date().toLocaleString('en-US',{timeZone:'Asia/Bangkok',hour:'numeric',hour12:false});
   $('#greet').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
   $('#today').textContent = new Date().toLocaleDateString('id-ID',{timeZone:'Asia/Bangkok',weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const showF = S.page === 'dashboard' || (S.page === 'ppn' && S.sub === 'MASUKAN');
+  const showF = S.page === 'dashboard';
   $('#filters').style.display = showF ? '' : 'none'; if (showF) buildMasa();
 }
 function soon(msg) { return `<div class="soonbox"><b>Data menyusul</b><p>${msg}</p></div>`; }
@@ -505,73 +567,125 @@ function renderDashboard() {
   </div>
   <p class="small" style="margin:8px 6px">PPN Masukan = jumlah PPN faktur yang sudah dipilih tim tax sebagai PPN MASUKAN pada masa pelaporan di atas (faktur DOUBLE / DIGANTI / BATAL tidak dihitung).</p>`;
 }
-function badges(r, di) {
-  const s = st(r) || {}; const out = [];
-  if (r.error) out.push(`<span class="tag err" title="${esc(r.pesan)}">ERROR</span> <span class="small">${esc(r.pesan).slice(0,60)}</span>`);
-  if (s.batal) out.push('<span class="tag gray">BATAL</span>');
-  if (s.dup === 'DOUBLE') out.push('<span class="tag gray">DOUBLE · tidak dikreditkan</span>');
-  if (s.dup === 'DIGANTI') out.push('<span class="tag gray">DIGANTI pembetulan</span>');
-  if (s.dup === 'PEMBETULAN') out.push('<span class="tag info">PEMBETULAN</span>');
-  if (!r.error && !isExcl(r)) {
-    if (s.approved) out.push(`<span class="tag ok" title="Approved oleh ${esc(s.approved_by)} ${esc(s.approved_at)}">✔ Approved${s.printed ? ' · Printed' : ''}</span><div class="small">${esc(s.printed_by || s.approved_by)}, ${esc((s.printed_at || s.approved_at || '').slice(0,16))}</div>`);
-    else if (catKey(r) && s.masa) out.push('<span class="tag info">Siap print</span>');
-    else out.push('<span class="tag warn">WAITING</span>');
+/* ===== PPN MASUKAN: tampilan kartu ===== */
+const BLN3 = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const fmtD = d => d ? `${String(d.d).padStart(2,'0')} ${BLN3[d.m]} ${d.y}` : '–';
+const masaShort = k => { if (!k || k === 'none') return '–'; const [y,m] = k.split('-'); return `${BLN3[+m-1]} ${y}`; };
+const nsfp = r => r.full ? `${r.kode}.${r.fp.slice(0,5)}-<b>${r.last8}</b>` : esc(r.fp || '–');
+const nsfpTxt = r => r.full ? `${r.kode}.${r.fp.slice(0,5)}-${r.last8}` : (r.fp || '–');
+// Saran sistem (aturan sample): cut-off tgl 25, masa = bulan tanggal FP; Ditunda bila input melewati cut-off / masa lebih lama dari 1 bulan.
+function suggest(r) {
+  if (!r.d) return null;
+  const n = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
+  const run = n.getFullYear() * 12 + n.getMonth(), fpm = r.d.y * 12 + r.d.m, diff = run - fpm;
+  const inp = String(r.processed || '').slice(0, 10), cutoff = `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-25`;
+  const input = inp.match(/^\d{4}-\d{2}-\d{2}$/) ? inp : `${r.d.y}-${String(r.d.m+1).padStart(2,'0')}-${String(r.d.d).padStart(2,'0')}`;
+  let cat = 'MASUKAN';
+  if (diff >= 2 || (diff === 1 && input > cutoff)) cat = 'DITUNDA';
+  return { cat, category: CATS[cat], masa: masaKey(r.d), expired: diff > 3 };
+}
+function pill(r) {
+  const s = st(r) || {};
+  if (r.error) return '<span class="spill err">ERROR</span>';
+  if (s.batal) return '<span class="spill gray">BATAL</span>';
+  if (s.dup === 'DOUBLE') return '<span class="spill gray">DOUBLE</span>';
+  if (s.dup === 'DIGANTI') return '<span class="spill gray">DIGANTI</span>';
+  if (s.approved) return `<span class="spill ok" title="Approved oleh ${esc(s.approved_by)}, ${esc(s.approved_at)}">✔ APPROVED${s.printed ? ' · PRINTED' : ''}</span>`;
+  if (catKey(r) && s.masa) return '<span class="spill info">SIAP PRINT</span>';
+  return '<span class="spill warn">⏳ WAITING</span>';
+}
+function card(r, groups, opts) {
+  const s = st(r) || {}, di = dupInfo(r, groups), sg = suggest(r), ck = catKey(r), excl = isExcl(r);
+  const lock = !canAct(r) || isApproved(r) || excl || !S.stateReady;
+  const canPrint = canAct(r) && ck && s.masa && !excl && r.pdf && S.stateReady;
+  const extra = [];
+  if (s.dup === 'PEMBETULAN') extra.push('<span class="spill vio">Faktur pembetulan</span>');
+  if (di && !di.open && !excl && s.dup !== 'PEMBETULAN') extra.push('<span class="small">8 digit sama · selesai</span>');
+  if (r.scanX > 1) extra.push(`<span class="small">tercatat ${r.scanX}× di sheet</span>`);
+  const sugBtn = !ck && !excl && sg && canAct(r) && S.stateReady ? `<button class="sug" data-act="sug" data-key="${esc(r.key)}" title="Terapkan saran sistem (cut-off tanggal 25)">✦ Saran: ${CATS[sg.cat].replace('PPN ','PPN ')} · ${masaShort(sg.masa)}</button>` : '';
+  const expired = sg && sg.expired ? '<span class="exp">⚠ Kedaluwarsa &gt; 3 bulan</span>' : '';
+  const edited = s.edited ? `<div class="editedp">✎ edited by ${esc(s.last_edit_by)}, ${esc((s.last_edit_at || '').slice(0,10))}${s.edit_approved_by ? ' · disetujui ' + esc(s.edit_approved_by) : ''}</div>` : '';
+  const pend = s.pending_edit ? `<div class="pend">⏳ Edit menunggu head: ${esc(Object.entries(s.pending_edit.changes || {}).map(([k,v]) => k + ' → ' + (v === '' ? '(kosong)' : v)).join(', '))} <span class="small">· ${esc(s.pending_edit.requested_by)}, ${esc((s.pending_edit.requested_at||'').slice(0,16))} · ${esc(s.pending_edit.note || '')}</span>
+      <span class="btns"><button class="btn sm ok" data-act="eok" data-key="${esc(r.key)}">Setujui</button><button class="btn sm bad" data-act="erej" data-key="${esc(r.key)}">Tolak</button></span></div>` : '';
+  const err = r.error ? `<div class="pend" style="background:#fde3df;color:var(--bad)">${esc(r.pesan || 'Data tidak lengkap')}</div>` : '';
+  const dup = di && di.open ? `<div class="dupcard"><span class="dic">⚠</span><div class="dtx"><b>WARNING DUPLICATE · 8 DIGIT NSFP ${esc(r.last8)} SAMA</b><br>dengan ${di.others.map(o => `${esc(nsfpTxt(o))} (PT. ${esc(o.pt)} · ${esc(o.supplier)} · FP ${fmtD(o.d)})`).join('; ')}</div>
+      <span class="dact">Pilih tindakan:</span><button class="dbtn red" data-act="dbl" data-key="${esc(r.key)}" ${S.stateReady ? '' : 'disabled'}>⧉ Double</button><button class="dbtn vio" data-act="pemb" data-key="${esc(r.key)}" ${S.stateReady ? '' : 'disabled'}>▯ Pembetulan</button></div>` : '';
+  const cls = ['fcard', excl ? 'excl' : '', di && di.open ? 'dupb' : s.approved ? 'appr' : ck === 'MASUKAN' ? 'cm' : ck === 'DITUNDA' ? 'cd' : '', S.sel.has(r.key) ? 'selc' : ''].join(' ');
+  const masaOpts = opts.masaOpts.map(k => `<option value="${k}" ${s.masa === k ? 'selected' : ''}>${masaLabel(k)}</option>`).join('');
+  return `<div class="${cls}">
+    <label class="ck">${r.key ? `<input type="checkbox" data-sel="${esc(r.key)}" ${S.sel.has(r.key) ? 'checked' : ''}>` : ''}</label>
+    <div class="fmain"><div class="l1"><span class="nsfp ${excl ? 'strike' : ''}">${nsfp(r)}</span><span class="ptb">${esc(r.pt)}</span><span class="small">FP ${fmtD(r.d)}</span></div>
+      <div class="sup" title="${esc(r.supplier)}">${esc(r.supplier)}</div>
+      <div class="l3"><span class="small">Pembeli: ${esc(r.pembeli || '–')}</span>${sugBtn}${expired}${extra.join('')}</div>${edited}</div>
+    <div class="famt"><div class="small">DPP <span>${rp(r.dpp)}</span></div><div class="big">Rp ${rp(r.ppn)}</div><div class="lbl">PPN</div></div>
+    <div class="facts"><div class="arow">
+      <button class="cbtn m ${ck === 'MASUKAN' ? 'on' : ''}" data-act="setcat" data-cat="${CATS.MASUKAN}" data-key="${esc(r.key)}" ${lock ? 'disabled' : ''}>▤ PPN Masukan</button>
+      <button class="cbtn d ${ck === 'DITUNDA' ? 'on' : ''}" data-act="setcat" data-cat="${CATS.DITUNDA}" data-key="${esc(r.key)}" ${lock ? 'disabled' : ''}>◔ PPN Ditunda</button>
+      <select class="msel" data-act="masa" data-key="${esc(r.key)}" ${lock ? 'disabled' : ''}>${s.masa ? '' : '<option value="">Masa pelaporan…</option>'}${masaOpts}</select></div>
+      <div class="arow"><button class="pbtn" data-act="print1" data-key="${esc(r.key)}" ${canPrint ? '' : 'disabled'} title="${canPrint ? (s.printed ? 'Buka PDF lagi' : 'Print PDF & Approve') : r.pdf ? 'Pilih kategori + masa dulu' : 'PDF pecahan belum tersedia'}">🖨 ${s.printed ? 'Cetak ulang' : 'Print'}</button>
+        ${canAct(r) ? `<button class="ebtn" data-act="edit" data-key="${esc(r.key)}" ${s.pending_edit || !S.stateReady ? 'disabled' : ''}>✎ Edit</button>` : ''}
+        ${pill(r)}${!ck && !excl && !r.error ? '<span class="hint">Pilih PPN Masukan / Ditunda</span>' : ''}
+        ${r.pdf ? `<button class="eye" data-act="view" data-key="${esc(r.key)}" title="Lihat PDF faktur">👁</button>` : '<span class="small" title="PDF pecahan belum tersedia">–</span>'}</div></div>
+    ${pend}${err}${dup}</div>`;
+}
+function renderRekap(base) {
+  const by = new Map();
+  for (const r of base) {
+    if (r.error || isExcl(r)) continue; const s = st(r) || {}; const k = s.masa || '—';
+    if (!by.has(k)) by.set(k, { m: [0,0,0], d: [0,0,0], w: 0 });
+    const g = by.get(k), ck = catKey(r);
+    if (ck === 'MASUKAN') { g.m[0]++; g.m[1] += r.dpp || 0; g.m[2] += r.ppn || 0; }
+    else if (ck === 'DITUNDA') { g.d[0]++; g.d[1] += r.dpp || 0; g.d[2] += r.ppn || 0; }
+    else g.w++;
   }
-  if (s.edited) out.push(`<div class="small"><b>edited by ${esc(s.last_edit_by)}, ${esc((s.last_edit_at || '').slice(0,10))}</b>${s.edit_approved_by ? ' (disetujui ' + esc(s.edit_approved_by) + ')' : ''}</div>`);
-  if (s.pending_edit) {
-    const c = s.pending_edit.changes || {};
-    out.push(`<div class="pend">⏳ Edit menunggu head: ${esc(Object.entries(c).map(([k,v]) => k + ' → ' + (v === '' ? '(kosong)' : v)).join(', '))}<br><span class="small">oleh ${esc(s.pending_edit.requested_by)}, ${esc((s.pending_edit.requested_at||'').slice(0,16))} · ${esc(s.pending_edit.note || '')}</span>
-      <div class="btns" style="margin-top:4px;display:flex;gap:6px"><button class="btn sm ok" data-act="eok" data-key="${esc(r.key)}">Setujui</button><button class="btn sm bad" data-act="erej" data-key="${esc(r.key)}">Tolak</button></div></div>`);
-  }
-  if (di && di.open) out.push(`<div class="dupbox">⚠ <b>faktur pajak ini duplicate</b> (8 digit belakang ${esc(r.last8)} sama dengan ${esc(di.others.map(o => o.full + ' ' + o.supplier).join(', '))})<div class="btns"><button class="btn sm" data-act="dbl" data-key="${esc(r.key)}">Double</button><button class="btn sm" data-act="pemb" data-key="${esc(r.key)}">Pembetulan</button></div></div>`);
-  if (r.scanX > 1) out.push(`<div class="small">tercatat ${r.scanX}× di sheet (identik)</div>`);
-  return out.join('');
+  const keys = [...by.keys()].sort().reverse(); const T = { m:[0,0,0], d:[0,0,0], w:0 };
+  keys.forEach(k => { const g = by.get(k); for (let i = 0; i < 3; i++) { T.m[i] += g.m[i]; T.d[i] += g.d[i]; } T.w += g.w; });
+  return `<div class="head2"><h3>Rekapan per masa pelaporan</h3><span class="small">faktur tanpa error, tidak dikecualikan</span><button class="btn" id="csv">⬇ Unduh CSV semua faktur</button></div>
+    <div class="tablewrap"><table><thead><tr><th>Masa pelaporan</th><th class="n">Faktur Masukan</th><th class="n">DPP</th><th class="n">PPN Masukan</th><th class="n">Faktur Ditunda</th><th class="n">DPP</th><th class="n">PPN Ditunda</th><th class="n">Waiting</th></tr></thead>
+    <tbody>${keys.map(k => { const g = by.get(k); return `<tr><td>${k === '—' ? 'Belum ada masa' : masaLabel(k)}</td><td class="n">${g.m[0]}</td><td class="n">${rp(g.m[1])}</td><td class="n">${rp(g.m[2])}</td><td class="n">${g.d[0]}</td><td class="n">${rp(g.d[1])}</td><td class="n">${rp(g.d[2])}</td><td class="n">${g.w}</td></tr>`; }).join('') || '<tr><td colspan="8" class="empty">Belum ada data</td></tr>'}</tbody>
+    <tfoot><tr><td>Total</td><td class="n">${T.m[0]}</td><td class="n">${rp(T.m[1])}</td><td class="n">${rp(T.m[2])}</td><td class="n">${T.d[0]}</td><td class="n">${rp(T.d[1])}</td><td class="n">${rp(T.d[2])}</td><td class="n">${T.w}</td></tr></tfoot></table></div>`;
 }
 function renderPPN() {
   const seg = `<div class="seg"><button class="${S.sub==='KELUARAN'?'on':''}" data-sub="KELUARAN"><b>PPN KELUARAN</b><small>Faktur pajak atas penjualan (sistem Clara)</small></button>
     <button class="${S.sub==='MASUKAN'?'on':''}" data-sub="MASUKAN"><b>PPN MASUKAN</b><small>Klasifikasi Masukan / Ditunda &amp; pelaporan per masa</small></button></div>`;
   if (S.sub === 'KELUARAN') return `<div class="card">${seg}</div>` + embedPanel('FAKTUR PAJAK PPN KELUARAN', CONFIG.CLARA_URL, 'sistem Clara (PPN Keluaran)');
-  const base = filtered(); const groups = dupGroups();
-  const TABS = [['ALL','Semua Faktur'],['MASUKAN','PPN Masukan'],['DITUNDA','PPN Ditunda'],['WAITING','Waiting'],['EDITED','Edited']];
+  const groups = dupGroups();
+  const scope = S.rows.filter(r => (S.pt === 'ALL' || r.pt === S.pt) && (S.masa === 'all' || r.masa === S.masa));   // PT + masa faktur
+  const base = filtered();                                                                                              // + pencarian
+  const TABS = [['ALL','Semua Faktur'],['MASUKAN','PPN Masukan'],['DITUNDA','PPN DITUNDA'],['WAITING','WAITING'],['EDITED','EDITED']];
   const counts = Object.fromEntries(TABS.map(([k]) => [k, base.filter(r => tabMatch(r, k)).length]));
   const pendN = base.filter(r => st(r) && st(r).pending_edit).length;
-  const rows = base.filter(r => tabMatch(r, S.tab) && (!S.pending || (st(r) && st(r).pending_edit)));
-  const ok = rows.filter(r => !r.error && !isExcl(r));
-  const opts = masaOptions(); const sel = rows.filter(r => S.sel.has(r.key)); const allSel = rows.length && rows.filter(r => r.key).every(r => S.sel.has(r.key));
+  const dupRows = base.filter(r => { const di = dupInfo(r, groups); return di && di.open; });
+  let rows = base.filter(r => tabMatch(r, S.tab) && (!S.pending || (st(r) && st(r).pending_edit)));
+  if (S.dupOnly) rows = rows.filter(r => { const di = dupInfo(r, groups); return di && di.open; });
+  const sugN = base.filter(r => !catKey(r) && !isExcl(r) && canAct(r) && suggest(r)).length;
+  const selRows = rows.filter(r => S.sel.has(r.key)); const allSel = rows.length && rows.filter(r => r.key).every(r => S.sel.has(r.key));
+  const shown = rows.slice(0, S.limit);
+  const masaKeys = [...new Set(S.rows.map(r => r.masa))].sort().reverse();
+  const opts = { masaOpts: masaOptions() };
+  const view = S.view === 'rekap' ? 'rekap' : S.tab === 'DITUNDA' ? 'ditunda' : 'list';
   const dis = S.stateReady ? '' : 'disabled';
-  const body = rows.map(r => {
-    const s = st(r) || {}; const di = dupInfo(r, groups); const lock = !canAct(r) || isApproved(r) || isExcl(r) || !S.stateReady;
-    return `<tr class="${isExcl(r) ? 'excl' : ''} ${S.sel.has(r.key) ? 'sel' : ''}">
-    <td>${r.key ? `<input type="checkbox" data-sel="${esc(r.key)}" ${S.sel.has(r.key) ? 'checked' : ''}>` : ''}</td>
-    <td>${esc(r.tanggal)}</td><td>${esc(r.kode)}</td><td class="mono" title="${esc(r.full)}">${esc(r.full || r.fp)}</td><td>${esc(r.supplier)}</td>
-    <td class="n">${rp(r.harga)}</td><td class="n">${rp(r.dpp)}</td><td class="n">${rp(r.ppn)}</td><td class="n">${rp(r.dpp1112)}</td>
-    <td class="n ${selClass(r.selDpp)}">${rp(r.selDpp)}</td><td class="n ${selClass(r.selPpn)}">${rp(r.selPpn)}</td>
-    <td>${esc(r.pembeli)}</td><td>${esc(r.pt)}</td>
-    <td><select class="sm" data-act="cat" data-key="${esc(r.key)}" ${lock ? 'disabled' : ''}>${s.category ? '' : '<option value="">— pilih —</option>'}<option ${s.category === CATS.MASUKAN ? 'selected' : ''}>${CATS.MASUKAN}</option><option ${s.category === CATS.DITUNDA ? 'selected' : ''}>${CATS.DITUNDA}</option></select>
-        <select class="sm" data-act="masa" data-key="${esc(r.key)}" ${lock ? 'disabled' : ''}>${s.masa ? '' : '<option value="">— masa —</option>'}${opts.map(k => `<option value="${k}" ${s.masa === k ? 'selected' : ''}>${masaLabel(k)}</option>`).join('')}</select></td>
-    <td class="wrapc">${badges(r, di)}</td>
-    <td>${r.pdf ? `<a class="pdf" href="${esc(r.pdf)}" target="_blank" rel="noopener" title="${esc(r.pdfName)}">Buka PDF</a>` : '<span class="small">–</span>'}</td>
-    <td>${canAct(r) ? `<button class="btn sm" data-act="edit" data-key="${esc(r.key)}" ${s.pending_edit || !S.stateReady ? 'disabled' : ''}>Edit</button>` : ''}</td></tr>`; }).join('');
-  return `<div class="card">${seg}
-    <div class="tabs">${TABS.map(([k,l]) => `<button class="tab ${S.tab===k?'on':''}" data-tab="${k}">${l}<span>${counts[k]}</span></button>`).join('')}
-      ${pendN ? `<button class="tab warnt ${S.pending?'on':''}" data-pend="1">⏳ Edit menunggu head<span>${pendN}</span></button>` : ''}</div>
-    <div class="head2"><h3>PPN Masukan · Faktur Pajak (${rows.length})</h3>
-      <input type="search" id="q" placeholder="Cari supplier, No FP, pembeli…" value="${esc(S.q)}" style="min-width:240px">
-      <button class="btn" id="csv">Unduh CSV</button></div>
-    ${sel.length ? `<div class="selbar"><b>${sel.length} dipilih</b>
-      <select id="bCat" class="sm"><option value="">Kategori…</option><option>${CATS.MASUKAN}</option><option>${CATS.DITUNDA}</option></select>
-      <select id="bMasa" class="sm"><option value="">Masa…</option>${opts.map(k => `<option value="${k}">${masaLabel(k)}</option>`).join('')}</select>
-      <button class="btn sm dark" data-act="bulk" ${dis}>Terapkan</button>
+  const inner = S.view === 'rekap' ? renderRekap(base) : `
+    <div class="statrow"><div class="tstat"><small>TOTAL FAKTUR</small><b>${scope.length}</b><small>${S.masa === 'all' ? 'semua masa faktur' : 'masa ' + masaLabel(S.masa)}${S.pt === 'ALL' ? '' : ' · PT. ' + S.pt}</small></div></div>
+    <div class="statusrow"><span class="stl">STATUS</span>${TABS.map(([k,l]) => `<button class="stc ${k==='EDITED'?'ed':''} ${S.tab===k?'on':''}" data-tab="${k}">${l}<span>${counts[k]}</span></button>`).join('')}
+      ${pendN ? `<button class="stc warnt ${S.pending?'on':''}" data-pend="1" title="Permintaan edit yang menunggu persetujuan">⏳ menunggu head<span>${pendN}</span></button>` : ''}
+      ${sugN ? `<button class="sugall" data-act="sugall" ${dis}>✦ Terapkan saran ke ${sugN} faktur</button>` : ''}</div>
+    ${dupRows.length ? `<div class="dupbanner"><span class="dic">⚠</span><div class="dtx"><b>Warning duplicate — ${dupRows.length} faktur pajak memiliki 8 digit NSFP yang sama</b><br><span>Tentukan tindakan di setiap faktur: <b>Double</b> (input ganda, tidak dikreditkan) atau <b>Pembetulan</b> (faktur pengganti).</span></div><button class="btn sm" data-dupt="1">${S.dupOnly ? 'Tampilkan semua' : 'Tampilkan duplikat'}</button></div>` : ''}
+    <div class="selrow"><label><input type="checkbox" id="selAll" ${allSel ? 'checked' : ''}> <b>Select All</b> <span class="small">(${rows.length} faktur sesuai filter)</span></label>
+      ${selRows.length ? `<span class="small"><b>${selRows.length}</b> dipilih</span><select id="bCat" class="sm"><option value="">Kategori…</option><option>${CATS.MASUKAN}</option><option>${CATS.DITUNDA}</option></select><select id="bMasa" class="sm"><option value="">Masa…</option>${opts.masaOpts.map(k => `<option value="${k}">${masaLabel(k)}</option>`).join('')}</select><button class="btn sm" data-act="bulk" ${dis}>Terapkan</button><button class="btn sm" data-act="clr">Kosongkan</button>` : ''}
       <span style="margin-left:auto"></span>
-      <button class="btn sm" data-act="print" ${dis}>🖨 Print PDF</button><button class="btn sm" data-act="dl" ${dis}>⬇ Unduh PDF</button>
-      <button class="btn sm" data-act="clr">Kosongkan</button></div>` : ''}
-    <div class="legend">Semua faktur dari semua PT dalam satu daftar. Tim tax memilih PPN MASUKAN / PPN DITUNDA dan masa pelaporan; <b>Print/Unduh PDF otomatis menandai Printed + Approved (dilaporkan)</b> dan Approved tidak bisa dibatalkan. Edit faktur perlu persetujuan head. Selisih: <span class="sel-ok">0</span> · <span class="sel-min">±1</span> · <span class="sel-bad">&gt; 1 perlu dicek</span>. Total hanya faktur tanpa error dan tidak dikecualikan.</div>
+      <button class="btn sm" data-act="dl" ${selRows.length && S.stateReady ? '' : 'disabled'} title="Unduh PDF terpilih (juga ditandai Printed + Approved)">⬇ Unduh</button>
+      <button class="printall" data-act="print" ${selRows.length && S.stateReady ? '' : 'disabled'}>🖨 Print &amp; Approve${selRows.length ? ' (' + selRows.length + ')' : ''}</button></div>
     ${S.err && !S.rows.length ? `<div class="notice">Data belum bisa dimuat: ${esc(S.err)}</div>` : ''}
-    <div class="tablewrap"><table>
-      <thead><tr><th><input type="checkbox" id="selAll" ${allSel ? 'checked' : ''}></th><th>Tanggal</th><th>Kode</th><th>No FP</th><th>Supplier</th><th class="n">Harga Jual</th><th class="n">DPP</th><th class="n">PPN</th><th class="n">DPP (11/12)</th><th class="n">Selisih DPP</th><th class="n">Selisih PPN</th><th>Nama Pembeli</th><th>PT</th><th>Aksi tim tax</th><th>Status</th><th>PDF Pecahan</th><th></th></tr></thead>
-      <tbody>${body || `<tr><td colspan="17" class="empty">${S.err && !S.rows.length ? 'Data gagal dimuat.' : 'Tidak ada faktur untuk filter ini.'}</td></tr>`}</tbody>
-      <tfoot><tr><td colspan="5">Total (${ok.length} faktur)</td><td class="n">${rp(sum(ok,'harga'))}</td><td class="n">${rp(sum(ok,'dpp'))}</td><td class="n">${rp(sum(ok,'ppn'))}</td><td class="n">${rp(sum(ok,'dpp1112'))}</td><td class="n">${rp(sum(ok,'selDpp'))}</td><td class="n">${rp(sum(ok,'selPpn'))}</td><td colspan="6"></td></tr></tfoot>
-    </table></div></div>`;
+    <div class="cards">${shown.map(r => card(r, groups, opts)).join('') || `<div class="empty">${S.err && !S.rows.length ? 'Data gagal dimuat.' : 'Tidak ada faktur untuk filter ini.'}</div>`}</div>
+    ${rows.length > shown.length ? `<div style="text-align:center;padding:10px"><button class="btn" data-more="1">Tampilkan lebih banyak (${rows.length - shown.length} lagi)</button></div>` : ''}
+    <p class="legend" style="padding:8px 4px 0">Print &amp; Approve membuka/mengunduh PDF faktur lalu otomatis menandai <b>Printed + Approved</b> (dilaporkan). Approved tidak bisa dibatalkan; perubahan setelahnya lewat Edit dan perlu persetujuan. Saran sistem: cut-off tanggal 25, masa = bulan tanggal FP.</p>`;
+  return `<div class="card">${seg}
+    <div class="ppnbox"><div class="vtabs"><button class="${view==='list'?'on':''}" data-view="list">PPN MASUKAN</button><button class="${view==='ditunda'?'on':''}" data-view="ditunda">PPN DITUNDA</button><button class="${view==='rekap'?'on':''}" data-view="rekap">REKAPAN</button></div>
+      <div class="frow"><div class="chips" style="margin:0">${[['ALL','Semua PT']].concat(PTS.map(p => [p,'PT. '+p])).map(([k,l]) => `<button class="chip ${S.pt===k?'on':''}" data-pt="${k}"><i>${k}</i>${l}</button>`).join('')}</div>
+        <input type="search" id="q" placeholder="Cari NSFP / vendor / NPWP…" value="${esc(S.q)}" class="qin">
+        <select id="masaF"><option value="all">Semua masa faktur</option>${masaKeys.map(k => `<option value="${k}" ${k===S.masa?'selected':''}>Masa ${masaLabel(k)}</option>`).join('')}</select></div>
+      ${inner}</div></div>`;
 }
 const PPH_MODS = [
   { id:'pph23', t:'PPh 23', d:'Jasa, sewa selain tanah/bangunan (tarif 2%)' }, { id:'pph21g', t:'PPh 21/26', n:'Gaji', d:'Gaji pegawai · tarif TER bulanan' },
@@ -626,7 +740,10 @@ document.addEventListener('click', e => {
   const go = t.closest('[data-go]'); if (go) { S.page = go.dataset.go; if (go.dataset.sub) S.sub = go.dataset.sub; render(); return; }
   const sub = t.closest('[data-sub]'); if (sub && !sub.closest('[data-go]')) { S.sub = sub.dataset.sub; S.sel.clear(); render(); return; }
   const pt = t.closest('[data-pt]'); if (pt) { S.pt = pt.dataset.pt; render(); return; }
-  const tab = t.closest('[data-tab]'); if (tab) { S.tab = tab.dataset.tab; S.pending = false; render(); return; }
+  const vw = t.closest('[data-view]'); if (vw) { const v = vw.dataset.view; S.view = v === 'rekap' ? 'rekap' : 'list'; if (v === 'ditunda') S.tab = 'DITUNDA'; else if (v === 'list' && S.tab === 'DITUNDA') S.tab = 'ALL'; S.pending = false; render(); return; }
+  const tab = t.closest('[data-tab]'); if (tab) { S.tab = tab.dataset.tab; S.pending = false; S.view = 'list'; render(); return; }
+  if (t.closest('[data-dupt]')) { S.dupOnly = !S.dupOnly; render(); return; }
+  if (t.closest('[data-more]')) { S.limit += 60; render(); return; }
   if (t.closest('[data-pend]')) { S.pending = !S.pending; render(); return; }
   const ph = t.closest('[data-pph]'); if (ph) { S.pph = ph.dataset.pph; render(); return; }
   const rep = t.closest('[data-rep]'); if (rep) { S.rep = rep.dataset.rep; render(); return; }
@@ -636,12 +753,18 @@ document.addEventListener('click', e => {
   else if (a === 'dbl' && r) resolveDup(r, 'double'); else if (a === 'pemb' && r) resolveDup(r, 'pembetulan');
   else if (a === 'bulk') bulkApply(); else if (a === 'print') printSelected('print'); else if (a === 'dl') printSelected('download');
   else if (a === 'clr') { S.sel.clear(); render(); }
+  else if (a === 'setcat' && r) { const sg = suggest(r); postEvents([{ action: 'classify', faktur_key: key, category: b.dataset.cat, masa: (st(r) && st(r).masa) || (sg && sg.masa) || '' }], 'Kategori disimpan'); }
+  else if (a === 'print1' && r) printRows([r], 'print');
+  else if (a === 'view' && r) openPreview(r);
+  else if (a === 'sug' && r) applySuggestion([r]);
+  else if (a === 'sugall') applySuggestion(filtered().filter(x => !catKey(x) && !isExcl(x) && canAct(x) && suggest(x)));
 });
 document.addEventListener('change', e => {
   const t = e.target;
-  if (t.id === 'selAll') { const rows = filtered().filter(r => tabMatch(r, S.tab) && (!S.pending || (st(r) && st(r).pending_edit)) && r.key); if (t.checked) rows.forEach(r => S.sel.add(r.key)); else rows.forEach(r => S.sel.delete(r.key)); render(); return; }
+  if (t.id === 'selAll') { const g = dupGroups(); const rows = filtered().filter(r => tabMatch(r, S.tab) && (!S.pending || (st(r) && st(r).pending_edit)) && (!S.dupOnly || (dupInfo(r, g) && dupInfo(r, g).open)) && r.key); if (t.checked) rows.forEach(r => S.sel.add(r.key)); else rows.forEach(r => S.sel.delete(r.key)); render(); return; }
   if (t.dataset && t.dataset.sel) { if (t.checked) S.sel.add(t.dataset.sel); else S.sel.delete(t.dataset.sel); render(); return; }
-  if (t.dataset && t.dataset.act === 'cat') { const r = S.rows.find(x => x.key === t.dataset.key); postEvents([{ action: 'classify', faktur_key: t.dataset.key, category: t.value, masa: (st(r) && st(r).masa) || '' }], 'Kategori disimpan').then(ok => { if (!ok) render(); }); return; }
+  if (t.id === 'masaF') { S.masa = t.value; S.limit = 60; render(); return; }
+  if (false) { const r = S.rows.find(x => x.key === t.dataset.key); postEvents([{ action: 'classify', faktur_key: t.dataset.key, category: t.value, masa: (st(r) && st(r).masa) || '' }], 'Kategori disimpan').then(ok => { if (!ok) render(); }); return; }
   if (t.dataset && t.dataset.act === 'masa') { postEvents([{ action: 'masa', faktur_key: t.dataset.key, masa: t.value }], 'Masa disimpan').then(ok => { if (!ok) render(); }); return; }
 });
 $('#masa').onchange = e => { S.masa = e.target.value; render(); };

@@ -6,7 +6,7 @@ Dasbor statis (satu file `index.html`) untuk memantau faktur pajak. Tanpa build,
 
 ## Menu
 - **Dashboard** – hanya 3 total: PPN Keluaran (menyusul), PPN Masukan (dihitung), PPh (menyusul).
-- **PPN** – sub-tab *PPN Keluaran* (panel link sistem Clara, `CONFIG.CLARA_URL`) dan *PPN Masukan*.
+- **PPN** – sub-tab *PPN Keluaran* (panel link sistem Clara, `CONFIG.CLARA_URL`) dan *PPN Masukan* (tampilan kartu: tab PPN MASUKAN / PPN DITUNDA / REKAPAN, status chips, banner duplikat, Print & Approve, saran sistem cut-off tanggal 25).
   - Satu daftar semua faktur dari CSV publikasi *AP FP Test Report* (tab WNS/WSI/TTP/MJS/GMI/AMT + ERROR_LOG + Report Pecahan).
   - Tim tax memilih **PPN MASUKAN / PPN DITUNDA** + **masa**, per baris atau multi-select (bulk).
   - 5 sub-tab: Semua / PPN Masukan / PPN Ditunda / Waiting / Edited (+ filter edit menunggu head).
