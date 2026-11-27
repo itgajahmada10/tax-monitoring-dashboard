@@ -12,7 +12,7 @@ Dasbor statis (satu file `index.html`) untuk memantau faktur pajak. Tanpa build,
   - 5 sub-tab: Semua / PPN Masukan / PPN Ditunda / Waiting / Edited (+ filter edit menunggu head).
   - Peringatan duplikat (8 digit belakang serial) dengan aksi **Double** / **Pembetulan**.
   - **Print PDF / Unduh PDF** (PDF pecahan di Drive) otomatis menandai *Printed + Approved*.
-  - **Approved tidak bisa dibatalkan.** Edit tetap bisa, tapi lewat `edit_request` yang harus di-*approve* head.
+  - **Approved tidak bisa dibatalkan.** Edit tetap bisa lewat `edit_request` yang harus disetujui (edit_approve/edit_reject).
 - **PPh** – 6 modul sesuai template (PPh 23, 21/26 Gaji, 21 Jasa, 4(2), 22, 15), data menyusul.
 - **REPORT** – Neraca (Aktiva vs Pasiva) dan Laba Rugi sesuai template, data menyusul.
 - **SKTD** – panel link Purchasing Team (`CONFIG.SKTD_URL`), link menyusul.
@@ -23,8 +23,8 @@ Dasbor statis (satu file `index.html`) untuk memantau faktur pajak. Tanpa build,
   Aksi: `classify, masa, print, approve, batal, unbatal, pembetulan, dup_double, dup_pembetulan, dup_diganti, dup_reset, edit_request, edit_approve, edit_reject`. `unapprove` ditolak.
 - Kunci faktur: `PT|kode(4)|serial(13)`.
 
-## Pengguna (sementara)
-Belum ada login. Nama user + peran (user/head) disimpan di localStorage dan dikirim sebagai `user`/`role`. **Tidak diverifikasi**; akses dasbor belum dibatasi. Menunggu keputusan ibu & head.
+## Pengguna
+Belum ada login: semua aksi dicatat sebagai user "Tim Tax" (role "head" dikirim otomatis). Semua pengguna bisa memakai semua aksi, termasuk menyetujui/menolak edit. Akses dasbor belum dibatasi.
 
 ## Konfigurasi
 Edit objek `CONFIG` di `index.html`: `CLARA_URL`, `SKTD_URL`, `ACTION_API`, `CSV_BASE`, `TABS`.

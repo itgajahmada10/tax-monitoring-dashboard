@@ -31,8 +31,6 @@ button{font-family:inherit}
 .hello{margin-left:auto;text-align:right}
 .hello b{display:block;font-size:14px;color:var(--plum)}
 .hello span{font-size:11px;color:var(--plum2)}
-.userchip{border:1px solid var(--line);background:#fff;color:var(--plum);border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
-.userchip small{font-weight:500;color:var(--warn);font-size:10px}
 .bar{margin-top:12px;background:rgba(240,248,250,.85);border:1px solid var(--line);border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px}
 .bar .grow{flex:1}
 .lag{margin:6px 4px 0;font-size:10.5px;color:var(--muted)}
@@ -146,7 +144,6 @@ tr.hd td{background:#f6eef5;font-weight:600;color:var(--plum)}tr.tot td{font-wei
       <nav class="nav" id="nav">
         <button data-page="dashboard">Dashboard</button><button data-page="ppn">% PPN</button><button data-page="pph">PPh</button><button data-page="report">REPORT</button><button data-page="sktd">SKTD</button>
       </nav>
-      <button class="userchip" id="userchip" title="Pengguna sementara (belum ada login)"></button>
       <div class="hello"><b id="greet">Selamat datang</b><span id="today"></span></div>
     </div>
     <div class="bar">
@@ -164,14 +161,6 @@ tr.hd td{background:#f6eef5;font-weight:600;color:var(--plum)}tr.tot td{font-wei
   </main>
 </div>
 
-<div class="modal" id="userModal"><div class="mbox">
-  <h3>Pengguna sementara</h3>
-  <p class="small">Belum ada login. Nama dan peran hanya disimpan di peramban ini dan <b>belum diverifikasi</b>; akses dasbor juga belum dibatasi. Menunggu keputusan ibu &amp; head (login/akses akan ditambahkan nanti).</p>
-  <label>Nama user</label><input type="text" id="uName" maxlength="60" placeholder="mis. Siti">
-  <label>Peran (sementara)</label>
-  <select id="uRole"><option value="user">User (tim tax)</option><option value="head">Head (boleh setujui / tolak edit)</option></select>
-  <div class="row"><button class="btn dark" id="uSave">Simpan</button></div>
-</div></div>
 <div class="modal" id="editModal"><div class="mbox" id="editBox"></div></div>
 <div id="toast"></div>
 
@@ -193,10 +182,10 @@ const PTS = ['AMT','GMI','MJS','TTP','WNS','WSI'];
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const MON = {jan:0,feb:1,mar:2,apr:3,may:4,mei:4,jun:5,jul:6,aug:7,agu:7,agt:7,sep:8,oct:9,okt:9,nov:10,dec:11,des:11};
 const CATS = { MASUKAN: 'PPN MASUKAN', DITUNDA: 'PPN DITUNDA' };
-const LS = { data: 'fpmon.dataset.v1', states: 'fpmon.states.v1', user: 'fpmon.user', role: 'fpmon.role' };
+const LS = { data: 'fpmon.dataset.v1', states: 'fpmon.states.v1' };
 const S = { page:'dashboard', sub:'MASUKAN', tab:'ALL', pending:false, pt:'ALL', masa:'all', q:'', rows:[], meta:null, err:null, loading:false,
   states:{}, stateMeta:null, stateErr:null, stateReady:false, sel:new Set(), pph:'pph23', rep:'NERACA',
-  user: localStorage.getItem(LS.user) || '', role: localStorage.getItem(LS.role) || 'user' };
+  user: 'Tim Tax', role: 'head' };  // tanpa login: semua pengguna dicatat sebagai "Tim Tax"
 
 const $ = s => document.querySelector(s);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -384,7 +373,6 @@ async function loadState() {
 
 /* ===== AKSI (tulis ke FP Action API) ===== */
 async function postEvents(events, okMsg) {
-  if (!S.user) { openUser(); toast('Isi nama user dulu', 'err'); return false; }
   if (!S.stateReady) { toast('Status aksi belum termuat. Coba Muat ulang.', 'err'); return false; }
   const body = { user: S.user, role: S.role, client_info: 'web ' + (navigator.userAgent || '').slice(0, 80), events: events.map(e => ({ ...e })) };
   try {
@@ -461,7 +449,6 @@ function openEdit(key) {
   };
 }
 function editDecision(key, ok) {
-  if (S.role !== 'head') { toast('Hanya head yang bisa menyetujui / menolak edit', 'err'); return; }
   const note = ok ? '' : (prompt('Alasan penolakan (opsional):') || '');
   postEvents([{ action: ok ? 'edit_approve' : 'edit_reject', faktur_key: key, note }], ok ? 'Edit disetujui dan diterapkan' : 'Edit ditolak');
 }
@@ -487,8 +474,7 @@ function renderChrome() {
     $('#syncInfo').innerHTML = html;
   } else $('#syncInfo').textContent = S.loading ? 'Memuat data dari Google Sheet…' : 'Memuat data…';
   $('#warns').innerHTML = (S.stateErr ? `<div class="warnbar bad">${esc(S.stateErr)}</div>` : '') +
-    `<div class="warnbar">Sementara: belum ada login. Pengguna <b>${esc(S.user || '(belum diisi)')}</b> · peran <b>${esc(S.role)}</b> hanya pengaturan lokal dan belum diverifikasi. Akses dasbor belum dibatasi (menunggu keputusan ibu &amp; head).</div>`;
-  $('#userchip').innerHTML = `👤 ${esc(S.user || 'Isi nama')} · ${esc(S.role)} <small>sementara</small>`;
+    '';
   const h = +new Date().toLocaleString('en-US',{timeZone:'Asia/Bangkok',hour:'numeric',hour12:false});
   $('#greet').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
   $('#today').textContent = new Date().toLocaleDateString('id-ID',{timeZone:'Asia/Bangkok',weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -535,7 +521,7 @@ function badges(r, di) {
   if (s.pending_edit) {
     const c = s.pending_edit.changes || {};
     out.push(`<div class="pend">⏳ Edit menunggu head: ${esc(Object.entries(c).map(([k,v]) => k + ' → ' + (v === '' ? '(kosong)' : v)).join(', '))}<br><span class="small">oleh ${esc(s.pending_edit.requested_by)}, ${esc((s.pending_edit.requested_at||'').slice(0,16))} · ${esc(s.pending_edit.note || '')}</span>
-      ${S.role === 'head' ? `<div class="btns" style="margin-top:4px;display:flex;gap:6px"><button class="btn sm ok" data-act="eok" data-key="${esc(r.key)}">Setujui</button><button class="btn sm bad" data-act="erej" data-key="${esc(r.key)}">Tolak</button></div>` : '<br><span class="small">Menunggu persetujuan head</span>'}</div>`);
+      <div class="btns" style="margin-top:4px;display:flex;gap:6px"><button class="btn sm ok" data-act="eok" data-key="${esc(r.key)}">Setujui</button><button class="btn sm bad" data-act="erej" data-key="${esc(r.key)}">Tolak</button></div></div>`);
   }
   if (di && di.open) out.push(`<div class="dupbox">⚠ <b>faktur pajak ini duplicate</b> (8 digit belakang ${esc(r.last8)} sama dengan ${esc(di.others.map(o => o.full + ' ' + o.supplier).join(', '))})<div class="btns"><button class="btn sm" data-act="dbl" data-key="${esc(r.key)}">Double</button><button class="btn sm" data-act="pemb" data-key="${esc(r.key)}">Pembetulan</button></div></div>`);
   if (r.scanX > 1) out.push(`<div class="small">tercatat ${r.scanX}× di sheet (identik)</div>`);
@@ -634,9 +620,6 @@ function downloadCsv() {
 }
 
 /* ===== EVENT ===== */
-function openUser() { $('#uName').value = S.user; $('#uRole').value = S.role; $('#userModal').classList.add('on'); }
-$('#userchip').onclick = openUser;
-$('#uSave').onclick = () => { const n = $('#uName').value.trim(); if (!n) { toast('Nama wajib diisi', 'err'); return; } S.user = n; S.role = $('#uRole').value; localStorage.setItem(LS.user, S.user); localStorage.setItem(LS.role, S.role); $('#userModal').classList.remove('on'); render(); };
 document.addEventListener('click', e => {
   const t = e.target;
   const pg = t.closest('[data-page]'); if (pg) { S.page = pg.dataset.page; S.sel.clear(); render(); return; }
@@ -667,7 +650,6 @@ window.FPMON = { S, CONFIG, postEvents, loadState, render, load };
 render();
 { const sv = readPersisted(LS.data); if (sv) applyData({ ...sv.data, stale: false }); const ss = readPersisted(LS.states); if (ss) { S.states = ss.data.states || {}; } }
 render();
-if (!S.user) openUser();
 load(false).then(() => { setInterval(() => { if (!document.hidden) load(false); }, CONFIG.AUTO_MS); setInterval(() => { if (!document.hidden && !inFlight) loadState().then(render); }, CONFIG.STATE_MS); });
 </script>
 </body>
