@@ -32,8 +32,11 @@ body{font-family:Poppins,Montserrat,system-ui,sans-serif;color:var(--ink);backgr
 .hello span{font-size:11px;color:var(--plum2)}
 .bar{margin-top:12px;background:rgba(240,248,250,.85);border:1px solid var(--line);border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px}
 .bar .grow{flex:1}
+.lag{margin:6px 4px 0;font-size:10.5px;color:var(--muted)}
 .btn{border:1px solid var(--line);background:#fff;color:var(--plum);font:inherit;font-weight:600;font-size:11.5px;padding:6px 12px;border-radius:10px;cursor:pointer}
 .btn.dark{background:var(--plum);color:#fff;border-color:var(--plum)}
+.btn[disabled]{opacity:.65;cursor:wait}
+.btn.spinning{pointer-events:none}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
 .chip{display:flex;align-items:center;gap:7px;border:0;background:#fff;font:inherit;font-weight:600;font-size:11.5px;color:var(--plum);padding:5px 12px 5px 5px;border-radius:999px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .chip i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#FFF3B0;display:grid;place-items:center;font-size:8.5px}
@@ -98,6 +101,7 @@ a.pdf{color:var(--plum);font-weight:600}
       <span class="grow" id="syncInfo">Memuat data…</span>
       <button class="btn dark" id="reload">↻ Muat ulang</button>
     </div>
+    <p class="lag">CSV publikasi Google bisa tertinggal hingga sekitar 5 menit setelah perubahan di sheet. Jika baris baru belum muncul, tunggu sebentar lalu klik Muat ulang.</p>
     <div class="chips" id="chips"></div>
     <div class="filters">
       <select id="masa"></select>
@@ -107,19 +111,56 @@ a.pdf{color:var(--plum);font-weight:600}
   </main>
 </div>
 <script>
-// Sumber data: workflow n8n "AP FP Dashboard API" (membaca sheet AP FP Test Report). URL webhook publik, tanpa kunci rahasia.
-const API_URL = 'https://n8.waruna-group.co.id/webhook/apfp-dashboard-api';
+/* Data live dari Google Sheet AP FP Test Report (File → Bagikan → Publikasikan ke web, CSV).
+   Pola sama dengan ACC Tes: fetch CSV langsung di peramban, tanpa kredensial.
+   Webhook n8n hanya cadangan jika CSV tidak bisa diambil lintas domain. */
+const CSV_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUBbwy805Fe6rotEpYmQ96xGqg_wQrbnMBQqPc4n7l5MjDhTQ5Udg1rS5-IbTx0wo7E5wOua4PfzHM/pub';
+const TABS = {
+  WNS: 2103303084,
+  WSI: 1669590346,
+  TTP: 646025745,
+  MJS: 1128887525,
+  GMI: 1026642202,
+  AMT: 28302846,
+  ERROR_LOG: 712843919,
+  'Report Pecahan': 1373135141
+};
+const WEBHOOK_FALLBACK = 'https://n8.waruna-group.co.id/webhook/apfp-dashboard-api';
+const LS_KEY = 'fpmon.dataset.v1';
+const AUTO_MS = 5 * 60 * 1000;
 const PTS = ['AMT','GMI','MJS','TTP','WNS','WSI'];
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 const MON = {jan:0,feb:1,mar:2,apr:3,may:4,mei:4,jun:5,jul:6,aug:7,agu:7,agt:7,sep:8,oct:9,okt:9,nov:10,dec:11,des:11};
-const S = { page: 'dashboard', pt: 'ALL', masa: 'all', status: 'all', q: '', rows: [], meta: null, err: null };
+const S = { page: 'dashboard', pt: 'ALL', masa: 'all', status: 'all', q: '', rows: [], meta: null, err: null, loading: false };
 
 const $ = s => document.querySelector(s);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const num = v => { if (v === '' || v == null) return null; if (typeof v === 'number') return v; const s = String(v).replace(/[^0-9,.\-]/g,'').replace(/\./g,'').replace(',', '.'); const n = parseFloat(s); return isNaN(n) ? null : n; };
+const digits = v => String(v ?? '').replace(/\D/g, '');
+const nowWib = () => new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Bangkok' });
+
+function num(v) {
+  if (v === '' || v == null) return null;
+  if (typeof v === 'number') return isNaN(v) ? null : v;
+  let s = String(v).trim().replace(/Rp|\s/gi, '');
+  if (!s) return null;
+  const hasComma = s.indexOf(',') >= 0, hasDot = s.indexOf('.') >= 0;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    const parts = s.split(',');
+    if (parts.length > 1 && parts.slice(1).every(p => /^\d{3}$/.test(p))) s = parts.join('');
+    else if (parts.length === 2) s = parts[0] + '.' + parts[1];
+    else s = s.replace(/,/g, '');
+  } else if (hasDot) {
+    const parts = s.split('.');
+    if (parts.length > 1 && parts.slice(1).every(p => /^\d{3}$/.test(p))) s = parts.join('');
+  }
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
 const rp = v => v == null ? '–' : new Intl.NumberFormat('id-ID').format(Math.round(v));
 const rpShort = v => { if (v == null) return '–'; const a = Math.abs(v); if (a >= 1e9) return 'Rp ' + (v/1e9).toLocaleString('id-ID',{maximumFractionDigits:2}) + ' M'; if (a >= 1e6) return 'Rp ' + (v/1e6).toLocaleString('id-ID',{maximumFractionDigits:2}) + ' jt'; return 'Rp ' + rp(v); };
-const digits = v => String(v ?? '').replace(/\D/g, '');
 
 function parseDate(v) {
   if (v == null || v === '') return null;
@@ -133,6 +174,45 @@ function parseDate(v) {
 }
 const masaKey = d => d ? `${d.y}-${String(d.m+1).padStart(2,'0')}` : 'none';
 const masaLabel = k => { if (k === 'none') return 'Tanpa tanggal'; const [y,m] = k.split('-'); return `${BULAN[+m-1]} ${y}`; };
+
+function parseCsv(text) {
+  const src = String(text || '').replace(/^\uFEFF/, '');
+  const rows = [];
+  let row = [], field = '', i = 0, inQ = false;
+  while (i < src.length) {
+    const c = src[i];
+    if (inQ) {
+      if (c === '"') {
+        if (src[i + 1] === '"') { field += '"'; i += 2; continue; }
+        inQ = false; i++; continue;
+      }
+      field += c; i++; continue;
+    }
+    if (c === '"') { inQ = true; i++; continue; }
+    if (c === ',') { row.push(field); field = ''; i++; continue; }
+    if (c === '\r') { i++; continue; }
+    if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+    field += c; i++;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  if (!rows.length) return [];
+  const headers = rows[0].map(h => String(h ?? '').trim());
+  const out = [];
+  for (let r = 1; r < rows.length; r++) {
+    const line = rows[r] || [];
+    const obj = { row_number: r + 1 };
+    let any = false;
+    for (let c = 0; c < headers.length; c++) {
+      const key = headers[c];
+      if (!key) continue;
+      const val = line[c] != null ? line[c] : '';
+      obj[key] = val;
+      if (String(val).trim() !== '') any = true;
+    }
+    if (any) out.push(obj);
+  }
+  return out;
+}
 
 function normalize(data) {
   const pec = (data.pecahan || []).filter(p => String(p.Status||'').toUpperCase() === 'OK' && p['Drive Link']);
@@ -182,16 +262,143 @@ function filtered(useStatus = true) {
 }
 const sum = (rows, k) => rows.reduce((a, r) => a + (r[k] || 0), 0);
 
-async function load() {
-  $('#syncInfo').textContent = 'Memuat data dari AP FP Test Report…';
-  try {
-    const res = await fetch(API_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    S.meta = data; S.err = null; S.rows = normalize(data);
-  } catch (e) { S.err = e.message || String(e); }
-  buildMasa(); render();
+function applyData(data) {
+  S.meta = data;
+  S.err = null;
+  S.rows = normalize(data);
+  buildMasa();
 }
+
+function persist(data) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ saved_at: nowWib(), data })); } catch (_) {}
+}
+function loadPersisted() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && parsed.data && parsed.data.companies ? parsed : null;
+  } catch (_) { return null; }
+}
+
+function csvUrl(gid) {
+  const u = new URL(CSV_BASE);
+  u.searchParams.set('gid', String(gid));
+  u.searchParams.set('single', 'true');
+  u.searchParams.set('output', 'csv');
+  u.searchParams.set('t', String(Date.now()));
+  return u.toString();
+}
+
+async function fetchCsv(name, gid) {
+  const res = await fetch(csvUrl(gid), { cache: 'no-store', mode: 'cors' });
+  if (!res.ok) throw new Error(name + ': HTTP ' + res.status);
+  const text = await res.text();
+  const trimmed = (text || '').trim();
+  if (!trimmed) throw new Error(name + ': CSV kosong');
+  if (/^<!DOCTYPE|^<html/i.test(trimmed)) throw new Error(name + ': respons bukan CSV (halaman HTML)');
+  return parseCsv(text);
+}
+
+async function loadFromCsv() {
+  const names = Object.keys(TABS);
+  const results = await Promise.all(names.map(async (name) => {
+    try { return { name, rows: await fetchCsv(name, TABS[name]), error: null }; }
+    catch (e) { return { name, rows: null, error: e.message || String(e) }; }
+  }));
+  const failed = results.filter(r => r.error);
+  const ok = results.filter(r => !r.error);
+  if (!ok.length) {
+    const corsish = failed.every(f => /Failed to fetch|NetworkError|CORS|Load failed|respons bukan CSV/i.test(f.error || ''));
+    const err = new Error(failed.map(f => f.error).join('; '));
+    err.corsLikely = corsish;
+    throw err;
+  }
+  const by = Object.fromEntries(results.map(r => [r.name, r.rows || []]));
+  const data = {
+    generated_at: nowWib(),
+    source: 'AP FP Test Report (CSV)',
+    companies: Object.fromEntries(PTS.map(pt => [pt, by[pt] || []])),
+    error_log: by.ERROR_LOG || [],
+    pecahan: by['Report Pecahan'] || [],
+    errors: failed.map(f => f.error),
+    stale: false,
+    via: 'csv'
+  };
+  if (failed.length) {
+    const err = new Error('Sebagian tab gagal: ' + failed.map(f => f.error).join('; '));
+    err.partial = data;
+    throw err;
+  }
+  return data;
+}
+
+async function loadFromWebhook() {
+  const res = await fetch(WEBHOOK_FALLBACK + '?t=' + Date.now(), { cache: 'no-store', mode: 'cors' });
+  if (!res.ok) throw new Error('Webhook cadangan HTTP ' + res.status);
+  const data = await res.json();
+  if (!data || !data.companies) throw new Error('Webhook cadangan: JSON tidak valid');
+  data.generated_at = data.generated_at || nowWib();
+  data.source = data.source || 'AP FP Dashboard API (cadangan)';
+  data.stale = false;
+  data.via = 'webhook';
+  data.errors = data.errors || [];
+  return data;
+}
+
+let inFlight = null;
+async function load(force) {
+  if (inFlight) return inFlight;
+  const btn = $('#reload');
+  S.loading = true;
+  if (btn) { btn.disabled = true; btn.classList.add('spinning'); }
+  if (!S.rows.length) $('#syncInfo').textContent = 'Memuat data dari Google Sheet…';
+  else if (force) renderChrome();
+  inFlight = (async () => {
+    try {
+      const data = await loadFromCsv();
+      applyData(data);
+      persist(data);
+    } catch (e) {
+      if (e.partial && (e.partial.pecahan.length || PTS.some(pt => (e.partial.companies[pt]||[]).length))) {
+        e.partial.stale = false;
+        applyData(e.partial);
+        persist(e.partial);
+      } else {
+        let used = false;
+        if (e.corsLikely) {
+          try {
+            const data = await loadFromWebhook();
+            applyData(data);
+            persist(data);
+            used = true;
+          } catch (w) { e.webhookError = w.message || String(w); }
+        }
+        if (!used) {
+          if (S.meta && S.rows.length) {
+            S.meta = { ...S.meta, stale: true };
+            S.err = 'Gagal memuat data live dari Google Sheet. Menampilkan data terakhir yang tersimpan. (' + (e.message || e) + ')';
+          } else {
+            const saved = loadPersisted();
+            if (saved && saved.data) {
+              applyData({ ...saved.data, stale: true });
+              S.err = 'Gagal memuat data live dari Google Sheet. Menampilkan data terakhir yang tersimpan. (' + (e.message || e) + ')';
+            } else {
+              S.err = e.message || String(e);
+            }
+          }
+        }
+      }
+    } finally {
+      S.loading = false;
+      inFlight = null;
+      if (btn) { btn.disabled = false; btn.classList.remove('spinning'); }
+      render();
+    }
+  })();
+  return inFlight;
+}
+
 function buildMasa() {
   const keys = [...new Set(S.rows.map(r => r.masa))].sort().reverse();
   if (S.masa !== 'all' && !keys.includes(S.masa)) S.masa = 'all';
@@ -200,9 +407,23 @@ function buildMasa() {
 function renderChrome() {
   document.querySelectorAll('[data-page]').forEach(b => b.classList.toggle('on', b.dataset.page === S.page));
   $('#chips').innerHTML = [['ALL','Semua PT']].concat(PTS.map(p => [p,'PT. '+p])).map(([k,l]) => `<button class="chip ${S.pt===k?'on':''}" data-pt="${k}"><i>${k}</i>${l}</button>`).join('');
-  if (S.err) $('#syncInfo').innerHTML = `<b style="color:var(--bad)">Gagal memuat data</b> (${esc(S.err)}). Pastikan workflow n8n "AP FP Dashboard API" aktif, lalu klik Muat ulang.`;
-  else if (S.meta) { const nErr = S.rows.filter(r => r.error).length;
-    $('#syncInfo').innerHTML = `Data dari <b>AP FP Test Report</b> · n8n, sinkron terakhir <b>${esc(S.meta.generated_at)} WIB</b> · ${S.rows.length} record · ${(S.meta.pecahan||[]).length} PDF pecahan` + (nErr ? ` · <b style="color:var(--bad)">${nErr} error</b>` : '') + ((S.meta.errors||[]).length ? ` · <span style="color:var(--bad)">tab gagal dibaca: ${esc(S.meta.errors.join('; '))}</span>` : ''); }
+  const nErr = S.rows.filter(r => r.error).length;
+  if (!S.meta && S.err) {
+    $('#syncInfo').innerHTML = `<b style="color:var(--bad)">Gagal memuat data</b> (${esc(S.err)}). Coba klik Muat ulang.`;
+  } else if (S.meta) {
+    const via = S.meta.via === 'webhook' ? 'cadangan n8n' : 'CSV Google Sheet';
+    const stale = S.meta.stale;
+    const sync = stale
+      ? ` · <b style="color:var(--warn)">cache lama</b>, diambil <b>${esc(S.meta.generated_at)} WIB</b>`
+      : ` · dimuat <b>${esc(S.meta.generated_at)} WIB</b>`;
+    let html = `Data live dari <b>AP FP Test Report</b> (${via})${sync} · ${S.rows.length} record · ${(S.meta.pecahan||[]).length} PDF pecahan`;
+    if (nErr) html += ` · <b style="color:var(--bad)">${nErr} error</b>`;
+    if (S.err && stale) html += ` · <span style="color:var(--warn)">${esc(S.err)}</span>`;
+    else if ((S.meta.errors||[]).length) html += ` · <span style="color:var(--warn)">${esc(S.meta.errors.join('; '))}</span>`;
+    $('#syncInfo').innerHTML = html;
+  } else {
+    $('#syncInfo').textContent = S.loading ? 'Memuat data dari Google Sheet…' : 'Memuat data…';
+  }
   const h = +new Date().toLocaleString('en-US',{timeZone:'Asia/Bangkok',hour:'numeric',hour12:false});
   $('#greet').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
   $('#today').textContent = new Date().toLocaleDateString('id-ID',{timeZone:'Asia/Bangkok',weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -248,10 +469,10 @@ function renderPPN() {
       <input type="search" id="q" placeholder="Cari supplier, No FP, pembeli…" value="${esc(S.q)}" style="min-width:240px">
       <button class="btn" id="csv">Unduh CSV</button></div>
     <div class="legend">Selisih: <span class="sel-ok">0 = cocok</span> · <span class="sel-min">±1 = pembulatan</span> · <span class="sel-bad">&gt; 1 = perlu dicek</span>. No FP ditampilkan lengkap 17 digit (kode + nomor seri). Total hanya menghitung baris tanpa error.</div>
-    ${S.err ? `<div class="notice">Data belum bisa dimuat: ${esc(S.err)}</div>` : ''}
+    ${S.err && !S.rows.length ? `<div class="notice">Data belum bisa dimuat: ${esc(S.err)}</div>` : ''}
     <div class="tablewrap"><table>
       <thead><tr><th>Tanggal</th><th>Kode</th><th>No FP</th><th>Supplier</th><th class="n">Harga Jual</th><th class="n">DPP</th><th class="n">PPN</th><th class="n">DPP (11/12)</th><th class="n">Selisih DPP</th><th class="n">Selisih PPN</th><th>Nama Pembeli</th><th>PT</th><th>Status / Pesan Error</th><th>PDF Pecahan</th></tr></thead>
-      <tbody>${body || `<tr><td colspan="14" class="empty">${S.err ? 'Data gagal dimuat.' : 'Belum ada faktur untuk filter ini.'}</td></tr>`}</tbody>
+      <tbody>${body || `<tr><td colspan="14" class="empty">${S.err && !S.rows.length ? 'Data gagal dimuat.' : 'Belum ada faktur untuk filter ini.'}</td></tr>`}</tbody>
       <tfoot><tr><td colspan="4">Total (${ok.length} faktur)</td><td class="n">${rp(sum(ok,'harga'))}</td><td class="n">${rp(sum(ok,'dpp'))}</td><td class="n">${rp(sum(ok,'ppn'))}</td><td class="n">${rp(sum(ok,'dpp1112'))}</td><td class="n">${rp(sum(ok,'selDpp'))}</td><td class="n">${rp(sum(ok,'selPpn'))}</td><td colspan="4"></td></tr></tfoot>
     </table></div></div>`;
 }
@@ -276,8 +497,19 @@ document.addEventListener('click', e => {
 });
 $('#masa').onchange = e => { S.masa = e.target.value; render(); };
 $('#status').onchange = e => { S.status = e.target.value; render(); };
-$('#reload').onclick = load;
-render(); load();
+$('#reload').onclick = () => load(true);
+
+function scheduleAutoRefresh() {
+  setInterval(() => {
+    if (document.hidden) return;
+    load(false);
+  }, AUTO_MS);
+}
+
+const saved = loadPersisted();
+if (saved && saved.data) applyData({ ...saved.data, stale: false });
+render();
+load(false).then(scheduleAutoRefresh);
 </script>
 </body>
 </html>
